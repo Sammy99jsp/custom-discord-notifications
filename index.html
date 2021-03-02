@@ -19,7 +19,7 @@
     <script type="module">
         import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js';
         async function testStuff() {
-            let pix = await fetch("/svg/badge-1.svg");
+            let pix = await fetch("/img/badge-1.svg");
             let arrBuff = await pix.arrayBuffer();
             let bytes = new Uint8Array(arrBuff);
 
