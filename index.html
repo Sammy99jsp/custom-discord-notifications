@@ -12,6 +12,7 @@
         <br><br>
         <h2>Discord Notification Indicators</h2>
         <button id="doIt">Do It</button>
+        <button id="getFolder">Get Folder</button>
         <div class="ui basic segments">
             <div class="ui segment">
                 <em>Preview</em>
@@ -31,21 +32,38 @@
     <script type="module">
         import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js';
         const SIZES = [48, 32, 16];
+        const range = [1, 11]; // Inclusive
 
-        function testStuff() {
-            const canvases = SIZES.map(e => document.getElementById('preview-' + e));
-            const contexts = canvases.map(e => e.getContext("2d"));
+        const folderDir = document.getElementById('getFolder');
+        folderDir.addEventListener('click', async () => {
+            const dirHandle = await window.showDirectoryPicker();
+            for (let i = range[1]; i <= range[1]; i++) {
+                await testStuff(i);
+                let data = await stepTwo();
+                const fileHandle = currentDirHandle.getFileHandle(`badge-${i}.ico`, {create: true});
+                const writable = await fileHandle.createWritable();
+                await writable.write(data);
+                await writable.close();
+                console.log("Written to", `badge-${i}.ico`, "successfully! Pog!");
+            }
+        });
 
-            let img = new Image();
-            img.onload = () => { 
-                contexts.forEach(ctx => ctx.drawImage(img, 0, 0)); 
-                stepTwo();
-            } 
-            img.src = "img/badge-1.svg"
+        function testStuff(i) {
+            return new Promise((res, rej) => {
+                const canvases = SIZES.map(e => document.getElementById('preview-' + e));
+                const contexts = canvases.map(e => e.getContext("2d"));
+
+                let img = new Image();
+                img.onload = () => { 
+                    contexts.forEach(ctx => ctx.drawImage(img, 0, 0)); 
+                    res();
+                } 
+                img.src = `img/badge-${i}.svg`;
+            })
         }
 
 
-        async function stepTwo() {
+        async function stepTwo(index) {
             const canvases = SIZES.map(e => document.getElementById('preview-' + e));
             let dataSizes = canvases.map(canvas => 
                 new Promise((res, rej) => 
@@ -58,21 +76,16 @@
             dataSizes = dataSizes.map(blob => blob.arrayBuffer());
             dataSizes = await Promise.all(dataSizes);
             console.log(dataSizes);
-            dataSizes = dataSizes.map((e, i) => ({name: "badge-1-" + SIZES[i] + ".png", content: new Uint8Array(e)}));
+            dataSizes = dataSizes.map((e, i) => ({name: `badge-${index}-${SIZES[i]}.png`, content: new Uint8Array(e)}));
             console.log(dataSizes);
 
             const files = dataSizes;
-            const command = ["convert", ...(dataSizes.map(e => e.name)), "badge-1.ico"];
+            const command = ["convert", ...(dataSizes.map(e => e.name)), `badge-${index}.ico`];
             console.log(command);
             let processedFiles = await Magick.Call(files, command);
             let firstOutputImage = processedFiles[0];
-
-            let downloadLink = document.getElementById("download");
-            downloadLink.href = URL.createObjectURL(firstOutputImage['blob']);
-            console.log("Made new Image! Pog!")
+            return firstOutputImage['blob'];
         }
-        document.getElementById('doIt').addEventListener("click", testStuff);
-
-</script>
-</body>
+        </script>
+    </body>
 </html>
