@@ -61,7 +61,7 @@
                 } 
 
                 let svg = await fetch(`img/badge-${i}.svg`)
-                svg = await body.text();
+                svg = await svg.text();
                 let split = svg.split(svgSplitter);
                 split[1] = window.color;
                 img.src = new Blob(split.join(""), {type: "image/svg+xml"});
