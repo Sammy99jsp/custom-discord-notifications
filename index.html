@@ -41,6 +41,7 @@
                 await testStuff(i);
                 let data = await stepTwo(i);
                 const fileHandle = dirHandle.getFileHandle(`badge-${i}.ico`, {create: true});
+                console.log(fileHandle);
                 const writable = await fileHandle.createWritable();
                 await writable.write(data);
                 await writable.close();
