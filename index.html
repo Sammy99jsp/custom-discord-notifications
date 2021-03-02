@@ -20,7 +20,7 @@
                 <canvas id="preview-16" width="16" height="16"></canvas>
             </div>
             <div class="ui segment">
-                <a disabled href="#" id="download"><em>Output</em></a>
+                <a id="download"><em>Output</em></a>
             </div>
         </div>
         
@@ -61,11 +61,11 @@
 
             const files = dataSizes;
             const command = ["convert", ...(dataSizes.map(e => e.name)), "badge-1.ico"];
-            let processed = await Magick.Call(files, command);
+            let processedFiles = await Magick.Call(files, command);
             let firstOutputImage = processedFiles[0];
 
             let downloadLink = document.getElementById("download");
-            downloadLink.src = URL.createObjectURL(firstOutputImage['blob']);
+            downloadLink.href = URL.createObjectURL(firstOutputImage['blob']);
             console.log("Made new Image! Pog!")
         }
         document.getElementById('doIt').addEventListener("click", testStuff);
