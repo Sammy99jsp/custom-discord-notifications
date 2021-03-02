@@ -54,9 +54,9 @@
             );
 
             dataSizes = await Promise.all(dataSizes);
-
-            dataSizes = await Promise.all(dataSizes.map(blob => blob.arrayBuffer()));
-
+            dataSizes = dataSizes.map(blob => blob.arrayBuffer());
+            dataSizes = await Promise.all(dataSizes);
+            console.log(dataSizes);
             dataSizes = dataSizes.map((e, i) => ({name: "badge-1-" + SIZES[i] + ".png", content: new Uint8Array(e)}));
             console.log(dataSizes);
 
