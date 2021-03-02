@@ -20,7 +20,7 @@
                 <canvas id="preview-16" width="16" height="16"></canvas>
             </div>
             <div class="ui segment">
-                <a id="download"><em>Output</em></a>
+                <a id="download" download="badge-1.ico"><em>Output</em></a>
             </div>
         </div>
         
@@ -30,8 +30,10 @@
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
     <script type="module">
         import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js';
+        const SIZES = [48, 32, 16];
+
         function testStuff() {
-            const canvases = [48, 32, 16].map(e => document.getElementById('preview-' + e));
+            const canvases = SIZES.map(e => document.getElementById('preview-' + e));
             const contexts = canvases.map(e => e.getContext("2d"));
 
             let img = new Image();
@@ -42,10 +44,9 @@
             img.src = "img/badge-1.svg"
         }
 
-        const SIZES = [48, 32, 16];
 
         async function stepTwo() {
-            const canvases = [48, 32, 16].map(e => document.getElementById('preview-' + e));
+            const canvases = SIZES.map(e => document.getElementById('preview-' + e));
             let dataSizes = canvases.map(canvas => 
                 new Promise((res, rej) => 
                     canvas.toBlob(res, "image/png")
@@ -61,6 +62,7 @@
 
             const files = dataSizes;
             const command = ["convert", ...(dataSizes.map(e => e.name)), "badge-1.ico"];
+            console.log(command);
             let processedFiles = await Magick.Call(files, command);
             let firstOutputImage = processedFiles[0];
 
