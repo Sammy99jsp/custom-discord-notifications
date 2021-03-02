@@ -54,6 +54,7 @@
             );
 
             dataSizes = await Promise.all(dataSizes);
+            console.log(dataSizes)
             dataSizes = dataSizes.map(blob => blob.arrayBuffer());
             dataSizes = await Promise.all(dataSizes);
             console.log(dataSizes);
