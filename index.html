@@ -29,15 +29,20 @@
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
     <script type="module">
         import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js';
-        import * as Canvg from 'https://unpkg.com/canvg@3.0.4/lib/umd.js';
-        async function testStuff() {
+        function testStuff() {
             const canvas = document.querySelector('canvas');
             const ctx = canvas.getContext('2d');
             
-            v = await Canvg.from(ctx, 'img/badge-1.svg');
+            let img = new Image();
+            img.onload = () => { ctx.drawImage(img, 0, 0); stepTwo(); } 
 
+        }
+
+        async function stepTwo() {
+            const canvas = document.querySelector('canvas');
+            const data = canvas.toDataURL("image/png");
+            document.getElementById("output").src = data;
             // Start SVG rendering with animations and mouse handling.
-            v.start();
             /*
             let pix = await fetch("img/badge-1.svg");
             let arrBuff = await pix.arrayBuffer();
