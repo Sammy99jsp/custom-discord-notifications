@@ -30,9 +30,8 @@
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
     <script type="module">
         import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js';
-        window.color = ["CAB100", "FFFFFF"];
-        const svgSplitter = /(?<=.cls-1{fill:#)([0-9a-f]{6})(?=;})/g;
-        const svgSplitterText = /(?<=.cls-2{fill:#)([0-9a-f]{6})(?=;})/g;
+        window.color = {bg: "CAB100", text: "FFFFFF"};
+        const svgSplitter = /(?<=.cls-[0-9]{fill:#)([0-9a-f]+)(?=;})/g
         const SIZES = [48, 32, 16];
         const range = [1, 11]; // Inclusive
 
@@ -63,11 +62,10 @@
 
                 let svg = await fetch(`img/badge-${i}.svg`)
                 svg = await svg.text();
-                let filtered = [svgSplitter, svgSplitterText].reduce((a, c, i) => {
-                    let tmp = a[0].split(c);
-                    tmp[1] = window.color[i];
-                    return tmp.join("");
-                }, [svg]);
+                svg = svg.split(svgSplitter);
+                svg[1] = window.color.bg;
+                svg[3] = window.color.text;
+                filtered = svg.join(""); 
                 console.log(filtered);
                 const blob = new Blob([filtered], {type: "image/svg+xml"});
                 img.src = URL.createObjectURL(blob);
