@@ -105,6 +105,7 @@
                 bg: document.getElementById('background-color').value.substring(1),
                 text: document.getElementById('foreground-color').value.substring(1)
             }
+            console.log(window.color)
             const dirHandle = await window.showDirectoryPicker();
             for (let i = range[0]; i <= range[1]; i++) {
                 await testStuff(i);
