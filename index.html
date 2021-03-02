@@ -65,7 +65,7 @@
                 svg = svg.split(svgSplitter);
                 svg[1] = window.color.bg;
                 svg[3] = window.color.text;
-                filtered = svg.join(""); 
+                let filtered = svg.join(""); 
                 console.log(filtered);
                 const blob = new Blob([filtered], {type: "image/svg+xml"});
                 img.src = URL.createObjectURL(blob);
