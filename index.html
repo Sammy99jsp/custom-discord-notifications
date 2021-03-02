@@ -64,10 +64,10 @@
                 let svg = await fetch(`img/badge-${i}.svg`)
                 svg = await svg.text();
                 let filtered = [svgSplitter, svgSplitterText].reduce((a, c, i) => {
-                    let tmp = a.split(c);
+                    let tmp = a[0].split(c);
                     tmp[1] = window.color[i];
                     return tmp.join("");
-                }, svg);
+                }, [svg]);
                 console.log(filtered);
                 const blob = new Blob([filtered], {type: "image/svg+xml"});
                 img.src = URL.createObjectURL(blob);
