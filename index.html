@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
+    <title>Discord Notification Indicators</title>
+</head>
+<body>
+    <div class="ui container">
+        <br><br>
+        <h2>Discord Notification Indicators</h2>
+        <button id="doIt">Do It</button>
+        <img id="output">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
+    <script type="module">
+        import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js';
+        async function testStuff() {
+            let pix = await fetch("/svg/badge-1.svg");
+            let arrBuff = await pix.arrayBuffer();
+            let bytes = new Uint8Array(arrBuff);
+
+            const files = [{name: "badge-1.svg", content: bytes}];
+            const command = ["convert", "badge-1.svg", "-scale", "32", "32.png"];
+            let processed = await Magick.Call(files, command);
+            let firstOutputImage = processedFiles[0];
+
+            let outputImg = document.getElementById("output");
+            outputImg.src = URL.createObjectURL(firstOutputImage['blob']);
+            console.log("Made new Image! Pog!")
+        }
+        document.getElementById('doIt').addEventListener("click", testStuff);
+
+</script>
+</body>
+</html>
