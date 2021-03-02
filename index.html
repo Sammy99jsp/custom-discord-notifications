@@ -20,8 +20,7 @@
                 <canvas id="preview-16" width="16" height="16"></canvas>
             </div>
             <div class="ui segment">
-                <em>Output</em>
-                <img id="output">
+                <a disabled href="#" id="download"><em>Output</em></a>
             </div>
         </div>
         
@@ -60,20 +59,14 @@
             dataSizes = dataSizes.map((e, i) => ({name: "badge-1-" + SIZES[i] + ".png", content: new Uint8Array(e)}));
             console.log(dataSizes);
 
-            // Start SVG rendering with animations and mouse handling.
-            /*
-            let pix = await fetch("img/badge-1.svg");
-            let arrBuff = await pix.arrayBuffer();
-            let bytes = new Uint8Array(arrBuff);
-
-            const files = [{name: "badge-1.svg", content: bytes}];
-            const command = ["convert", "badge-1.svg", "-scale", "32", "32.png"];
+            const files = dataSizes;
+            const command = ["convert", ...(dataSizes.map(e => e.name)), "badge-1.ico"];
             let processed = await Magick.Call(files, command);
             let firstOutputImage = processedFiles[0];
 
-            let outputImg = document.getElementById("output");
-            outputImg.src = URL.createObjectURL(firstOutputImage['blob']);
-            console.log("Made new Image! Pog!")*/
+            let downloadLink = document.getElementById("download");
+            downloadLink.src = URL.createObjectURL(firstOutputImage['blob']);
+            console.log("Made new Image! Pog!")
         }
         document.getElementById('doIt').addEventListener("click", testStuff);
 
