@@ -37,7 +37,7 @@
         const folderDir = document.getElementById('getFolder');
         folderDir.addEventListener('click', async () => {
             const dirHandle = await window.showDirectoryPicker();
-            for (let i = range[1]; i <= range[1]; i++) {
+            for (let i = range[0]; i <= range[1]; i++) {
                 await testStuff(i);
                 let data = await stepTwo(i);
                 const fileHandle = await dirHandle.getFileHandle(`badge-${i}.ico`, {create: true});
