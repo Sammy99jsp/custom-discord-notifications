@@ -1,0 +1,18 @@
+.lettered {
+    list-style-type: lower-latin;
+}
+
+.lettered kbd {
+    background-color: black;
+    color: whitesmoke;
+    padding: 2.5px;
+}
+
+.title {
+    font-size: 150%;
+}
+
+kbd.folder {
+    background-color: wheat;
+    color: black;
+}

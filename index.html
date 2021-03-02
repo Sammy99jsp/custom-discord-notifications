@@ -5,22 +5,86 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
-    <title>Discord Notification Indicators</title>
+    <link rel="stylesheet" href="main.css">
+    <title>Custom Discord Notification Badges</title>
 </head>
 <body>
     <div class="ui container">
         <br><br>
-        <h2>Discord Notification Indicators</h2>
-        <button id="getFolder">Get Folder</button>
+        <h2>Custom Discord Notification Badges</h2>
         <div class="ui basic segments">
-            <div class="ui segment">
+            <div class="ui segment" style="display: none;">
                 <em>Preview</em>
                 <canvas id="preview-48" width="48" height="48"></canvas>
                 <canvas id="preview-32" width="32" height="32"></canvas>
                 <canvas id="preview-16" width="16" height="16"></canvas>
             </div>
             <div class="ui segment">
-                <a id="download" download="badge-1.ico"><em>Output</em></a>
+                <h2>How to Customise Discord Badges</h2>
+                <ol>
+                    <li>
+                        First, use the following form below. Save the .ico'sto a folder of your choosing.
+                        <form class="ui form" id="color-picker">
+                            <div class="ui two fields">
+                                <div class="ui field">
+                                    <label class="ui basic label" for="background-color">
+                                        Backgorund Color
+                                      </label>
+                                      <input type="color" id="background-color" placeholder="Pick a color"><br>
+                                </div>
+                                <div class="ui field">
+                                    <label class="ui basic label" for="foreground-color">
+                                        Text Color
+                                      </label>
+                                      <input type="color" id="foreground-color" placeholder="Pick a color"><br>
+                                </div>
+                            </div>
+                            <button id="getFolder" type="submit" class="ui primary button"><i class="download icon"></i>&nbsp;Submit</button>
+                        </form>
+                        <br>
+                    </li>
+                    <li>
+                        Close <i class="discord icon"></i> Discord, if it's open. 
+                        <br>
+                        <br>
+                    </li>
+                    <li>
+                        Copy/Paste the icons from the selected folder into the <kbd class="folder">%appdata%\discord</kbd> folder.<br>
+                        <div class="ui icon message">
+                            <i class="exclamation triangle icon"></i>
+                            <div class="content">
+                              <div class="header">
+                                Backup
+                              </div>
+                              <b>Note</b>: You may wish to make a backup of the current icons into a New Folder such as <kbd class="folder">tray_backup</kbd>.
+                            </div>
+                        </div>
+                        <br>
+                    </li>
+                    <li>
+                        <span class="title">
+                            Reload the <i class="windows icon"></i>&nbsp;Windows Icon Cache
+                        </span>
+                        <br><br>
+                        <span><em>Run the following under administrator&nbsp;&nbsp;</em><i class="shield alternate icon"></i>&nbsp;&nbsp;<em>Command Prompt</em>&nbsp;&nbsp;<i class="terminal icon"></i></span>
+                        <ol class="lettered">
+                            <li>
+                                <kbd>taskkill /IM explorer.exe /F</kbd>
+                            </li>
+                            <li>
+                                <kbd>cd /d %userprofile%\AppData\Local</kbd>
+                            </li>
+                            <li>
+                                <kbd>del IconCache.db /a</kbd>
+                            </li>
+                            <li>
+                                <kbd>explorer.exe</kbd>
+                            </li>
+                        </ol>
+                        <br>
+                    </li>
+                    <li>Restart Discord <i class="discord icon"></i>.</li>
+                </ol>
             </div>
         </div>
         
@@ -35,8 +99,12 @@
         const SIZES = [48, 32, 16];
         const range = [1, 11]; // Inclusive
 
-        const folderDir = document.getElementById('getFolder');
-        folderDir.addEventListener('click', async () => {
+        const folderDir = document.getElementById('color-picker');
+        folderDir.addEventListener('submit', async () => {
+            window.color = {
+                bg: document.getElementById('background-color').value.substring(1),
+                text: document.getElementById('foreground-color').value.substring(1)
+            }
             const dirHandle = await window.showDirectoryPicker();
             for (let i = range[0]; i <= range[1]; i++) {
                 await testStuff(i);
