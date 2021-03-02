@@ -15,7 +15,9 @@
         <div class="ui basic segments">
             <div class="ui segment">
                 <em>Preview</em>
-                <canvas id="preview" width="48" height="48"></canvas>
+                <canvas id="preview-48" width="48" height="48"></canvas>
+                <canvas id="preview-32" width="32" height="32"></canvas>
+                <canvas id="preview-16" width="16" height="16"></canvas>
             </div>
             <div class="ui segment">
                 <em>Output</em>
@@ -30,19 +32,34 @@
     <script type="module">
         import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js';
         function testStuff() {
-            const canvas = document.querySelector('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            let img = new Image();
-            img.onload = () => { ctx.drawImage(img, 0, 0); stepTwo(); } 
-            img.src = "img/badge-1.svg"
+            const canvases = [48, 32, 16].map(e => document.getElementById('preview-' + e));
+            const contexts = canvases.map(e => e.getContext("2d"));
 
+            let img = new Image();
+            img.onload = () => { 
+                contexts.forEach(ctx => ctx.drawImage(img, 0, 0)); 
+                stepTwo();
+            } 
+            img.src = "img/badge-1.svg"
         }
 
+        const SIZES = [48, 32, 16];
+
         async function stepTwo() {
-            const canvas = document.querySelector('canvas');
-            const data = canvas.toDataURL("image/png");
-            document.getElementById("output").src = data;
+            const canvases = [48, 32, 16].map(e => document.getElementById('preview-' + e));
+            let dataSizes = canvases.map(canvas => 
+                new Promise((res, rej) => 
+                    canvas.toBlob(res, "image/png")
+                )
+            );
+
+            dataSizes = await Promise.all(dataSizes);
+
+            dataSizes = await Promise.all(dataSizes.map(blob => blob.arrayBuffer()));
+
+            dataSizes = dataSizes.map((e, i) => ({name: "badge-1-" + SIZES[i] + ".png", content: new Uint8Array(e)}));
+            console.log(dataSizes);
+
             // Start SVG rendering with animations and mouse handling.
             /*
             let pix = await fetch("img/badge-1.svg");
