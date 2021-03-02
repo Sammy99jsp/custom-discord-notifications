@@ -40,8 +40,7 @@
             for (let i = range[1]; i <= range[1]; i++) {
                 await testStuff(i);
                 let data = await stepTwo(i);
-                const fileHandle = dirHandle.getFileHandle(`badge-${i}.ico`, {create: true});
-                console.log(fileHandle);
+                const fileHandle = await dirHandle.getFileHandle(`badge-${i}.ico`, {create: true});
                 const writable = await fileHandle.createWritable();
                 await writable.write(data);
                 await writable.close();
