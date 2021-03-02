@@ -24,7 +24,7 @@
                 <ol>
                     <li>
                         First, use the following form below. Save the .ico'sto a folder of your choosing.
-                        <form class="ui form" id="color-picker" onsubmit="lol()">
+                        <form class="ui form" id="color-picker">
                             <div class="ui two fields">
                                 <div class="ui field">
                                     <label class="ui basic label" for="background-color">
@@ -99,7 +99,8 @@
         const SIZES = [48, 32, 16];
         const range = [1, 11]; // Inclusive
 
-        async function lol() {
+        document.getElementById('color-picker').addEventListener("submit", async function(e) {
+            e.preventDefault();
             window.color = {
                 bg: document.getElementById('background-color').value.substring(1),
                 text: document.getElementById('foreground-color').value.substring(1)
