@@ -12,13 +12,33 @@
         <br><br>
         <h2>Discord Notification Indicators</h2>
         <button id="doIt">Do It</button>
-        <img id="output">
+        <div class="ui basic segments">
+            <div class="ui segment">
+                <em>Preview</em>
+                <canvas id="preview"></canvas>
+            </div>
+            <div class="ui segment">
+                <em>Output</em>
+                <img id="output">
+            </div>
+        </div>
+        
+        
     </div>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/canvg@3.0.4/lib/umd.js"></script>
     <script type="module">
         import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js';
         async function testStuff() {
+            const canvas = document.querySelector('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            v = await Canvg.from(ctx, 'img/badge-1.svg');
+
+            // Start SVG rendering with animations and mouse handling.
+            v.start();
+            /*
             let pix = await fetch("img/badge-1.svg");
             let arrBuff = await pix.arrayBuffer();
             let bytes = new Uint8Array(arrBuff);
@@ -30,7 +50,7 @@
 
             let outputImg = document.getElementById("output");
             outputImg.src = URL.createObjectURL(firstOutputImage['blob']);
-            console.log("Made new Image! Pog!")
+            console.log("Made new Image! Pog!")*/
         }
         document.getElementById('doIt').addEventListener("click", testStuff);
 
