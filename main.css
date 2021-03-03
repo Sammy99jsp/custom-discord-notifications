@@ -27,6 +27,10 @@ kbd.folder {
     transition: cubic-bezier(0.39, 0.575, 0.565, 1) color 0.5s;
 }
 
+.checkable:hover {
+    filter: brightness(-0.15);
+}
+
 #step-one {
     cursor: pointer;
     transition: cubic-bezier(0.39, 0.575, 0.565, 1) color 0.5s;
