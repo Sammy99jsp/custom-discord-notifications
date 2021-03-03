@@ -103,9 +103,27 @@
         const range = [1, 11]; // Inclusive
         
         const progress = 0;
-        console.log($);
         function updateProgress() {
-            document.getElementById("colour-picker").classList.add("loading");
+            if(progress === 0 ){
+                $(`
+                <div class="ui indicating progress" data-value="0" data-total="${range[1]}" id="progress">
+                    <div class="bar">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="label">Icons Made: 0 / 11</div>
+                </div>
+                `)
+                    .appendTo("#loading")
+                    .progress({
+                        duration : range[1],
+                        total    : range[1],
+                        text     : {
+                            active: '{value} of {total} .ico\'s made'
+                        }
+                    });
+            }
+
+            $('#progress').progress('increment');
         }
 
         document.getElementById('color-picker').addEventListener("submit", async function(e) {
