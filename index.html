@@ -10,8 +10,9 @@
 </head>
 <body>
     <div class="ui container">
-        <br><br>
+        <br>
         <h2>Custom Discord Notification Badges</h2>
+        <br>
         <div class="ui basic segments">
             <div class="ui segment" style="display: none;">
                 <em>Preview</em>
@@ -21,27 +22,47 @@
             </div>
             <div class="ui segment">
                 <h2>How to Customise Discord Badges</h2>
+                <div class="meta">
+                    <i class="clock icon"></i> ~ 5 Min Guide<br>
+                    <i class="windows icon"></i> Windows Computers Only
+                </div>
                 <ol>
                     <li>
                         <i class="big check icon" id="step-one" title="Complete form below to complete step"></i>
-                        First, use the following form below. Save the .ico'sto a folder of your choosing.
+                        <span> <i class="brush icon"></i> Choose your color scheme. Once you're done, click download to download the icons into a folder of your choice.</span>
+                        <br>
+                        <div class="preview">
+                            <div class="badge">
+                                <label>4</label>
+                            </div>
+                            <div class="desc">Preview</div>
+                        </div>
                         <form class="ui form" id="color-picker">
-                            <div class="ui two fields">
-                                <div class="ui field">
-                                    <label class="ui basic label" for="background-color">
-                                        Backgorund Color
-                                      </label>
-                                      <input type="color" id="background-color" placeholder="Pick a color"><br>
+                            <div class="formy-row">
+                                <div class="ui two fields">
+                                    <div class="ui field">
+                                        <div class="ui color input">
+                                            <div class="circle"></div>
+                                            <label>Background Color</label>
+                                            <input type="color" id="background-color"><br>    
+                                            <i class="right tint icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ui field">
+                                        <div class="ui color input">
+                                            <div class="white circle"></div>
+                                            <label>Text Color</label>
+                                            <input type="color" id="foreground-color" value="#FFFFFF"><br>    
+                                            <i class="right tint icon"></i>
+                                        </div>    
+                                    </div>
                                 </div>
                                 <div class="ui field">
-                                    <label class="ui basic label" for="foreground-color">
-                                        Text Color
-                                      </label>
-                                      <input type="color" id="foreground-color" placeholder="Pick a color"><br>
+                                    <button id="getFolder" type="submit" class="ui primary button"><i class="download icon"></i>&nbsp;Download</button>
                                 </div>
                             </div>
-                            <button id="getFolder" type="submit" class="ui primary button"><i class="download icon"></i>&nbsp;Submit</button>
                         </form>
+                        <p>You'll need to grant us permission to write to that folder.</p>
                         <div id="loading">
                             <br>
                         </div>
@@ -55,14 +76,14 @@
                     </li>
                     <li>
                         <i class="big check icon checkable" title="Mark step as complete."></i>
-                        Copy/Paste the icons from the selected folder into the <kbd class="folder">%appdata%\discord</kbd> folder.<br>
+                        Copy/Paste the icons from the selected folder into the <kbd class="folder copyable">%appdata%\discord</kbd> folder.<br>
                         <div class="ui icon message">
                             <i class="exclamation triangle icon"></i>
                             <div class="content">
                               <div class="header">
                                 Backup
                               </div>
-                              <b>Note</b>: You may wish to make a backup of the current icons into a New Folder such as <kbd class="folder">tray_backup</kbd>.
+                              It is advised to make a backup of the current icons (all the <kbd class="folder">badge.ico</kbd> files) into a New Folder such as <kbd class="folder copyable">badge_backup</kbd>.
                             </div>
                         </div>
                         <br>
@@ -73,21 +94,25 @@
                             Reload the <i class="windows icon"></i>&nbsp;Windows Icon Cache
                         </span>
                         <br><br>
-                        <span><em>Run the following under administrator&nbsp;&nbsp;</em><i class="shield alternate icon"></i>&nbsp;&nbsp;<em>Command Prompt</em>&nbsp;&nbsp;<i class="terminal icon"></i></span>
-                        <ol class="lettered">
-                            <li>
-                                <kbd>taskkill /IM explorer.exe /F</kbd>
-                            </li>
-                            <li>
-                                <kbd>cd /d %userprofile%\AppData\Local</kbd>
-                            </li>
-                            <li>
-                                <kbd>del IconCache.db /a</kbd>
-                            </li>
-                            <li>
-                                <kbd>explorer.exe</kbd>
-                            </li>
-                        </ol>
+                        <span>Run the following commands in an <i class="shield alternate icon"></i>&nbsp;<em>Administrator</em>&nbsp;&nbsp;<i class="terminal icon"></i>&nbsp;<em>Command Prompt/Powershell terminal</em></span>
+                        <div class="commands">
+                            <div class="line">
+                                <span class="non-sel">C:\Windows\System32></span>
+                                <span class="copyable">taskkill /IM explorer.exe /F</span>
+                            </div>
+                            <div class="line">
+                                <span class="non-sel">C:\Windows\System32></span>
+                                <span class="copyable">cd /d %userprofile%\AppData\Local</span>
+                            </div>
+                            <div class="line">
+                                <span class="non-sel">C:\Users\...\AppData\Local></span>
+                                <span class="copyable">del IconCache.db /a</span>
+                            </div>
+                            <div class="line">
+                                <span class="non-sel">C:\Users\...\AppData\Local></span>
+                                <span class="copyable">explorer.exe</span>
+                            </div>
+                        </div>
                         <br>
                     </li>
                     <li>Restart Discord <i class="discord icon"></i>.</li>
@@ -101,16 +126,56 @@
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
     <script type="module">
         import * as Magick from 'https://knicknic.github.io/wasm-imagemagick/magickApi.js';
-        window.color = {bg: "CAB100", text: "FFFFFF"};
+        window.color = {"background-color": "CAB100", "foreground-color": "FFFFFF"};
         const svgSplitter = /(?<=.cls-[0-9]{fill:#)([0-9a-f]+)(?=;})/g
         const SIZES = [48, 32, 16];
         const range = [1, 11]; // Inclusive
         
         let progress = 0;
-
+        
+        // From https://stackoverflow.com/questions/985272/selecting-text-in-an-element-akin-to-highlighting-with-your-mouse
+        function selectText(node) {
+            if (document.body.createTextRange) {
+                const range = document.body.createTextRange();
+                range.moveToElementText(node);
+                range.select();
+            } else if (window.getSelection) {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(node);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            } else {
+                console.warn("Could not select text in node: Unsupported browser.");
+            }
+        }
+        
         $('.checkable').on("click", function(e) {
             e.preventDefault();
             $(this).addClass("green");
+        });
+
+        $('.ui.color.input').on('click' , function(e) {
+            $(this).find('input[type="color"]').click();
+        })
+
+        $('.ui.color.input input[type="color"]').on('click', function(e) {
+            e.stopPropagation();
+        })
+
+        $('.copyable').on('click', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            selectText($(this)[0]);
+        })
+
+        $('.ui.color.input input[type="color"]').on('change', function(e) {
+            // Update Picker UI
+            $(this).siblings(".circle").css({"background-color": $(this).val()});
+
+            let type = $(this).attr("id");
+            // Update Preview
+            $('.preview .badge').css({[type === "background-color" ? "background-color" : "color"]: $(this).val()})
         })
 
         function updateProgress() {
@@ -154,11 +219,11 @@
         document.getElementById('color-picker').addEventListener("submit", async function(e) {
             e.preventDefault();
             window.color = {
-                bg: document.getElementById('background-color').value.substring(1),
-                text: document.getElementById('foreground-color').value.substring(1)
+                "background-color": document.getElementById('background-color').value.substring(1),
+                "foreground-color": document.getElementById('foreground-color').value.substring(1)
             }
-            console.log(window.color)
             const dirHandle = await window.showDirectoryPicker();
+            $(this).toggleClass("loading");
             for (let i = range[0]; i < range[1] + 1; i++) {
                 await testStuff(i);
                 let data = await stepTwo(i);
@@ -169,6 +234,7 @@
                 console.log("Written to", `badge-${i}.ico`, "successfully! Poggers!");
                 updateProgress();
             }
+            $(this).toggleClass("loading");
         });
 
         function testStuff(i) {
@@ -185,8 +251,8 @@
                 let svg = await fetch(`img/badge-${i}.svg`)
                 svg = await svg.text();
                 svg = svg.split(svgSplitter);
-                svg[1] = window.color.bg;
-                svg[3] = window.color.text;
+                svg[1] = window.color["background-color"];
+                svg[3] = window.color["foreground-color"];
                 let filtered = svg.join(""); 
                 console.log(filtered);
                 const blob = new Blob([filtered], {type: "image/svg+xml"});

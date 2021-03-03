@@ -1,11 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+:root {
+    --inactive--color: #CCC7C7; 
+    --hover--color: #636262; 
+}
 .lettered {
     list-style-type: lower-latin;
-}
-
-.lettered kbd {
-    background-color: black;
-    color: whitesmoke;
-    padding: 2.5px;
 }
 
 .title {
@@ -15,6 +14,8 @@
 kbd.folder {
     background-color: wheat;
     color: black;
+    padding: 0.5em;
+    border-radius: 0.25em;
 }
 
 .centered {
@@ -23,20 +24,162 @@ kbd.folder {
 
 .checkable {
     cursor: pointer;
-    color: grey;
+    color: var(--inactive--color);
     transition: cubic-bezier(0.39, 0.575, 0.565, 1) color 0.5s;
 }
 
 .checkable:hover {
-    filter: brightness(-0.15);
+    color: var(--hover--color);
 }
 
 #step-one {
-    color: grey;
+    color: var(--inactive--color);
     cursor: not-allowed;
     transition: cubic-bezier(0.39, 0.575, 0.565, 1) color 0.5s;
 }
 
 #step-one.green {
     color: #21ba45;
+}
+
+.ui.color.input {
+    cursor: pointer;
+    position: relative;
+    margin: 0;
+    max-width: 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    outline: 0;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+    text-align: left;
+    line-height: 1.21428571em;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    padding: .67857143em 1em;
+    background: #fff;
+    border: 1px solid rgba(34,36,38,.15);
+    color: var(--inactive--color);
+    border-radius: .28571429rem;
+    -webkit-transition: border-color .1s ease,-webkit-box-shadow .1s ease;
+    transition: border-color .1s ease,-webkit-box-shadow .1s ease;
+    transition: box-shadow .1s ease,border-color .1s ease;
+    transition: box-shadow .1s ease,border-color .1s ease,-webkit-box-shadow .1s ease;
+    transition: cubic-bezier(0.39, 0.575, 0.565, 1) color 0.5s;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    display: flex;
+}
+
+.ui.color.input input[type="color"] {
+    position: absolute;
+    top: 0.5em;
+    left: 1.5em;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.ui.color > .circle {
+    height: 1.5em;
+    width: 1.5em;
+    border-radius: 0.5em;
+    background-color: black;
+    margin-right: .67857143em;
+    pointer-events: none;
+    transition: cubic-bezier(0.39, 0.575, 0.565, 1) background-color 0.5s;
+    border: 1px solid var(--inactive--color);
+}
+
+.ui.input.color > * {
+    align-self: center;
+}
+
+.ui.input.color label {
+    pointer-events: none;
+    color: #686868;
+}
+
+
+.ui.input.color > .right.icon {
+    margin-left: auto;
+    font-size: 150%;
+    color: var(--inactive--color);
+    transition: cubic-bezier(0.39, 0.575, 0.565, 1) 0.5s color;
+} 
+
+.ui.input.color:hover {
+    color: var(--hover--color);
+} 
+
+.ui.input.color:hover > .right.icon {
+    color: var(--hover--color);
+} 
+
+.ui.input.color > .circle.white {
+    background-color: white;
+}
+
+.formy-row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.formy-row .fields {
+    flex-grow: 1;
+}
+
+.formy-row .button {
+    margin-left: 1em;
+    align-items: center;
+    display: flex;
+    height: calc(100% - 1em);
+    vertical-align: middle;
+}
+
+#color-picker {
+    padding: 1em 1.5em;
+}
+
+.preview .badge {
+    width: 5em;
+    height: 5em;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 auto;
+    display: flex;
+}
+
+.preview .badge label {
+    vertical-align: middle;
+    margin: auto auto;
+    font-size: 400%;
+    font-family: 'Roboto', sans-serif;
+} 
+
+.preview .desc {
+    margin: 0 auto;
+    text-align: center;
+    font-style: italic;
+}
+
+.commands {
+    margin: 1em;
+    padding: 2em;
+    background-color: black;
+    color: white;
+    border-radius: 1em;
+    font-family: monospace;
+}
+
+.copyable {
+    cursor: copy;
+}
+
+.non-sel {
+    user-select: none;
+    pointer-events: none;
+    cursor: default;
 }
