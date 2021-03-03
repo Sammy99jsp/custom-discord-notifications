@@ -16,3 +16,12 @@ kbd.folder {
     background-color: wheat;
     color: black;
 }
+
+.centered {
+    text-align: center;
+}
+
+.checkable {
+    color: grey;
+    transition: cubic-bezier(0.39, 0.575, 0.565, 1) color 0.5s;
+}

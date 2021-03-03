@@ -23,6 +23,7 @@
                 <h2>How to Customise Discord Badges</h2>
                 <ol>
                     <li>
+                        <i class="big green icon" id="step-one"></i>
                         First, use the following form below. Save the .ico'sto a folder of your choosing.
                         <form class="ui form" id="color-picker">
                             <div class="ui two fields">
@@ -47,6 +48,7 @@
                         <br>
                     </li>
                     <li>
+                        <i class="big check icon checkable"></i>
                         Close <i class="discord icon"></i> Discord, if it's open. 
                         <br>
                         <br>
@@ -65,6 +67,7 @@
                         <br>
                     </li>
                     <li>
+                        <i class="big check icon checkable"></i>
                         <span class="title">
                             Reload the <i class="windows icon"></i>&nbsp;Windows Icon Cache
                         </span>
@@ -102,7 +105,13 @@
         const SIZES = [48, 32, 16];
         const range = [1, 11]; // Inclusive
         
-        const progress = 0;
+        let progress = 0;
+
+        $('.checkable').on("click", function(e) {
+            e.preventDefault();
+            $(this).addClass("green");
+        })
+
         function updateProgress() {
             if(progress === 0 ){
                 $(`
@@ -118,12 +127,26 @@
                         duration : range[1],
                         total    : range[1],
                         text     : {
-                            active: '{value} of {total} .ico\'s made'
+                            active: 'Icons made: {value} / {total}'
                         }
                     });
             }
-
+            progress++;
             $('#progress').progress('increment');
+            if(progress === range[1]) {
+                // Finished stuff! Yay! Display some sort of message!
+                $('#loading').append(
+                `<div class="ui green icon message">
+                     <i class="check circle icon"></i>
+                     <div class="content">
+                         <div class="header">
+                         Icons created!
+                         </div>
+                         <p>Hey! Check your chosen folder to see if they've been made!</p>
+                     </div>
+                 </div>`);
+                $('#step-one').addClass("check");
+            }
         }
 
         document.getElementById('color-picker').addEventListener("submit", async function(e) {
@@ -134,7 +157,7 @@
             }
             console.log(window.color)
             const dirHandle = await window.showDirectoryPicker();
-            for (let i = range[0]; i <= range[1]; i++) {
+            for (let i = range[0]; i < range[1] + 1; i++) {
                 await testStuff(i);
                 let data = await stepTwo(i);
                 const fileHandle = await dirHandle.getFileHandle(`badge-${i}.ico`, {create: true});
@@ -142,6 +165,7 @@
                 await writable.write(data);
                 await writable.close();
                 console.log("Written to", `badge-${i}.ico`, "successfully! Poggers!");
+                updateProgress();
             }
         });
 
