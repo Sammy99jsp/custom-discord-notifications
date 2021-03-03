@@ -41,6 +41,9 @@
                             </div>
                             <button id="getFolder" type="submit" class="ui primary button"><i class="download icon"></i>&nbsp;Submit</button>
                         </form>
+                        <div id="loading">
+
+                        </div>
                         <br>
                     </li>
                     <li>
@@ -98,6 +101,12 @@
         const svgSplitter = /(?<=.cls-[0-9]{fill:#)([0-9a-f]+)(?=;})/g
         const SIZES = [48, 32, 16];
         const range = [1, 11]; // Inclusive
+        
+        const progress = 0;
+        console.log($);
+        function updateProgress() {
+            document.getElementById("colour-picker").classList.add("loading");
+        }
 
         document.getElementById('color-picker').addEventListener("submit", async function(e) {
             e.preventDefault();
