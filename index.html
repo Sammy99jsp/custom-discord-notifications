@@ -23,7 +23,7 @@
                 <h2>How to Customise Discord Badges</h2>
                 <ol>
                     <li>
-                        <i class="big green icon" id="step-one"></i>
+                        <i class="big gray check icon" id="step-one" title="Complete form below to complete step"></i>
                         First, use the following form below. Save the .ico'sto a folder of your choosing.
                         <form class="ui form" id="color-picker">
                             <div class="ui two fields">
@@ -48,12 +48,13 @@
                         <br>
                     </li>
                     <li>
-                        <i class="big check icon checkable"></i>
+                        <i class="big check icon checkable" title="Mark step as complete."></i>
                         Close <i class="discord icon"></i> Discord, if it's open. 
                         <br>
                         <br>
                     </li>
                     <li>
+                        <i class="big check icon checkable" title="Mark step as complete."></i>
                         Copy/Paste the icons from the selected folder into the <kbd class="folder">%appdata%\discord</kbd> folder.<br>
                         <div class="ui icon message">
                             <i class="exclamation triangle icon"></i>
@@ -67,7 +68,7 @@
                         <br>
                     </li>
                     <li>
-                        <i class="big check icon checkable"></i>
+                        <i class="big check icon checkable" title="Mark step as complete."></i>
                         <span class="title">
                             Reload the <i class="windows icon"></i>&nbsp;Windows Icon Cache
                         </span>
@@ -130,6 +131,7 @@
                             active: 'Icons made: {value} / {total}'
                         }
                     });
+                    $('#step-one').removeClass("gray").addClass("green")
             }
             progress++;
             $('#progress').progress('increment');
